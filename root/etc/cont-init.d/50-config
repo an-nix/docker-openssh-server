@@ -53,11 +53,14 @@ fi
 
 # port forwarding
 if [ "$PORT_FORWARDING" == "true" ]; then
-    sed -i '/^#GatewayPort/c\GatewayPort yes' /etc/ssh/sshd_config
-    sed -i '/^GatewayPort/c\GatewayPort yes' /etc/ssh/sshd_config
+    sed -i '/^#GatewayPorts/c\GatewayPorts yes' /etc/ssh/sshd_config
+    sed -i '/^GatewayPorts/c\GatewayPorts yes' /etc/ssh/sshd_config
+    sed -i '/^#AllowTcpForwarding/c\AllowTcpForwarding yes' /etc/ssh/sshd_config
+    sed -i '/^AllowTcpForwarding/c\AllowTcpForwarding yes' /etc/ssh/sshd_config
     echo "Port forwarding is enabled."
 else
-    sed -i '/^GatewayPort/c\GatewayPort no' /etc/ssh/sshd_config
+    sed -i '/^GatewayPorts/c\GatewayPorts no' /etc/ssh/sshd_config
+    sed -i '/^AllowTcpForwarding/c\AllowTcpForwarding no' /etc/ssh/sshd_config
     echo "Port forwarding is disabled."
 fi
 
