@@ -51,6 +51,16 @@ else
     echo "User/password ssh access is disabled."
 fi
 
+# port forwarding
+if [ "$PORT_FORWARDING" == "true" ]; then
+    sed -i '/^#GatewayPort/c\GatewayPort yes' /etc/ssh/sshd_config
+    sed -i '/^GatewayPort/c\GatewayPort yes' /etc/ssh/sshd_config
+    echo "Port forwarding is enabled."
+else
+    sed -i '/^GatewayPort/c\GatewayPort no' /etc/ssh/sshd_config
+    echo "Port forwarding is disabled."
+fi
+
 # set umask for sftp
 UMASK=${UMASK:-022}
 sed -i "s|/usr/lib/ssh/sftp-server$|/usr/lib/ssh/sftp-server -u ${UMASK}|g" /etc/ssh/sshd_config
